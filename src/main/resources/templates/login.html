@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>the best hostel in the word</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/normalize.css}"/>
+    <link rel="stylesheet" th:href="@{/css/sm-core-css.css.css}"/>
+    <link rel="stylesheet" th:href="@{/css/sm-clean.css.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main1.css}"/>
+    <link rel="stylesheet" th:href="@{/css/skeleton.css}"/>
+    <link rel="stylesheet" th:href="@{/css/help.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.smartmenus.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.validate.js}"></script>
+</head>
+<script>
+    $(document).ready(function() {
+        $("#loginForm").validate({
+            rules: {
+                j_password: {
+                    required: true,
+                    minlength: 3
+                },
+                j_username: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                j_password: {
+                    required: "Write your password",
+                    minlength: "min 3 letters"
+                },
+                j_username: {
+                    required: "Write your email",
+                    email: "Wrong email adress"
+                }
+            },
+            success: function(label) {
+                label.addClass("valid").text("-")
+            }
+        });
+    });
+
+
+</script>
+
+<body>
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="three columns">
+                <a href="home.html">
+                    <img th:src="@{/images/img/hotel_1_1.png}" class="logo"/>
+                </a>
+                <p class="text">.com</p>
+            </div>
+
+
+            <div class="nine columns">
+                <nav class="nav">
+                    <div sec:authorize="!isAuthenticated()">
+                        <a href="loginForm">log In</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a href="logout">log Out</a>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">
+                        <a href="registration">registratinion</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a href="profile">cabinet</a>
+                    </div>
+
+
+                    <a href="#">About Us</a>
+                    <a class="current-page" href="roomsList">rooms</a>
+                    <a class="home" href="home.html">Home</a>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="twelve columns">
+            <div th:if="${error}">
+                Unable to login. Check your username and password.
+            </div>
+            <form class="form" name="f" method="POST" th:action="@{/authorize}" id="loginForm">
+                <p>
+                    <label class="label" for="username">Email : </label>
+                    <input id="username" type="email" name="username" required/>
+                    <label for="username" class="error"></label>
+                </p>
+                <p>
+                    <label class="label" for="password"> Password : </label>
+                    <input id="password" type="password" name="password" required minlength="3"/>
+                    <label for="password" class="error"></label>
+                </p>
+                <p><input id="submit" class="submit" name="submit" type="submit" value="submit"/></p>
+            </form>
+            <div class="registration">
+                <a class="button" href="registration">Registration</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="twelve columns">
+                <p id="text">Foot</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+
+</html>

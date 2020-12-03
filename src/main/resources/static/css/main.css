@@ -1,0 +1,80 @@
+
+ 	/* Цвет текста */
+ 	 #head {
+ 	        margin-top: -2.5%;
+             width: 100%;
+             background-color: rgb(202, 32, 32);
+         }
+
+         #text {
+             text-align: center;
+             font-family: 'Courier New', Courier, monospace;
+             text-transform: uppercase;
+             font-size: 2em;
+             font-weight: bold;
+             font-style: italic;
+         }
+
+         #foot {
+             width: 100%;
+             background-color: rgb(202, 32, 32);
+             margin-top: -2.4%;
+         }
+
+         #body {
+             background: #c7b39b url(resources/images/main.jpg) no-repeat  ; /* Цвет фона и путь к файлу */
+             color: #fff;
+             margin-top: -1.2%;
+             width: 100%;
+             text-align: center;
+         }
+
+         #inputtext {
+             width: 700px;
+             align-content: flex-start;
+             vertical-align: middle;
+             text-align: right;
+         }
+         #login {
+             width: 700px;
+             align-content: center;
+             vertical-align: middle;
+             text-align: right;
+         }
+         #choseroom {
+             width: 1400px;
+             align-content: center;
+             vertical-align: middle;
+             text-align: center;
+         }
+
+         #table {
+             width: 1300px;
+             height: 440px;
+             line-height: normal;
+             caption-side: bottom;
+             text-align: left;
+             font-size: 14px;
+         }
+
+         #input {
+             width: 130px;
+         }
+
+         #tbody {
+             display: block;
+             overflow: auto;
+             height: 440px;
+             width: 1300px;
+             text-align: left;
+         }
+ 		#form{
+ 			display: inline-block;
+ 		}
+ 		#button:hover{
+ 			color:  #FF4500;
+ 		}
+ 		#row:hover{
+ 			background:#E0FFFF;
+ 			color:  #FF4500;
+ 		}

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>the best hostel in the word</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/normalize.css}"/>
+    <link rel="stylesheet" th:href="@{/css/sm-core-css.css.css}"/>
+    <link rel="stylesheet" th:href="@{/css/sm-clean.css.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main1.css}"/>
+    <link rel="stylesheet" th:href="@{/css/help.css}"/>
+    <link rel="stylesheet" th:href="@{/css/skeleton.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.smartmenus.min.js}"></script>
+    <script>
+        $(document).ready(function() {
+          $(".deleteR").on("click", function() {
+                  var value1 = $(this).attr('href');
+                 console.log(value1);
+                 $("#delete").show();
+                 url1 = value1;
+                 console.log("url = "+url1);
+                 return false;
+          });
+
+          $("#deleteForm").click(function(event) {
+                 event.preventDefault();
+                 var req = new XMLHttpRequest();
+                 req.open("DELETE", "order/" + url1, false);
+                 req.send(null);
+                 document.location.href = "profile";
+          });
+          $("#cancelD").click(function() {
+                  $("#delete").hide();
+                  return false;
+          });
+
+
+
+            $(".sm").smartmenus();
+            $("#orders1").hide();
+            $("#reserves1").hide();
+            $("#orders").hide();
+            $("#reserves").hide();
+
+            $("#showReserves").click(function(evt) {
+                $("#reserves2").hide();
+                $("#reserves1").show();
+                $("#reserves").fadeIn(1000);
+
+            });
+
+            $("#hideReserves").click(function(evt) {
+                $("#reserves1").hide();
+                $("#reserves2").show();
+                $("#reserves").hide();
+
+            });
+            $("#showOrders").click(function(evt) {
+                $("#orders2").hide();
+                $("#orders1").show();
+                $("#orders").fadeIn(1000);
+
+            });
+
+            $("#hideOrders").click(function(evt) {
+                $("#orders1").hide();
+                $("#orders2").show();
+                $("#orders").hide();
+
+            })
+
+
+        });
+    </script>
+</head>
+
+
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="three columns">
+                    <a href="home.html">
+                        <img th:src="@{/images/img/hotel_1_1.png}" class="logo"/>
+                    </a>
+                    <p class="text">.com</p>
+                </div>
+
+
+
+                <div class="nine columns">
+                    <nav class="nav">
+                        <div sec:authorize="!isAuthenticated()">
+                            <a href="loginForm">log In</a>
+                        </div>
+                        <div sec:authorize="isAuthenticated()">
+                            <!-- <form method="POST" th:action="@{/logout}">
+                                 <input type="submit" value="Logout"/>
+                             </form>-->
+                            <a th:href="@{/exit}" >log Out</a>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()">
+                            <a href="registration">registratinion</a>
+                        </div>
+                        <div sec:authorize="isAuthenticated()">
+                            <a href="profile">cabinet</a>
+                        </div>
+
+
+                        <a href="#">About Us</a>
+                        <a href="room">rooms</a>
+                        <a class = "home"  href="/">Home</a>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="two columns profile">
+
+            </div>
+            <div class="five columns">
+               <div class="data profile1">
+                    <p> Name : <span th:text="${ user.name }"  /></p>
+                    <p class="more"><a href="#">Change</a></p>
+                </div>
+                <div class="data profile1">
+                    <p>Surname : <span th:text="${ user.surname }"  /></p>
+                    <p class="more"><a href="#">Change</a></p>
+                </div>
+                <div class="data profile1">
+                    <p>Email : <span th:text="${ user.email }"  /></p>
+                    <p class="more"><a href="#">Change</a></p>
+                </div>
+                <div class="data profile1">
+                    <p>Here you can change your password</p>
+                    <p class="more"><a href="#">Change</a></p>
+                </div>
+
+            </div>
+            <div class="five columns">
+
+                <div id="reserves2" class="data profile1">
+                    <p>Your reserves</p>
+                    <a id="showReserves" class="prof" href="#"><img th:src="@{/images/img/show_1_25X25.png}"></a>
+                </div>
+
+
+                <div id="reserves1" class="data profile1">
+                    <p>Your reserves</p>
+                    <a id="hideReserves" class="prof" href="#"><img th:src="@{/images/img/hide_1_25X25.png}"></a>
+                    <div id="reserves">
+                        <div th:each="reserve : ${reserves}" >
+                        <div>
+                            <img class="img" th:src="@{/images/img1/2.jpg}" width="250" height="150">
+                        </div>
+                        <p class="data">Number : <span th:text="${ reserve.room.number }"  /></p>
+                        <p class="data">Price : <span th:text="${ reserve.totalPrice }"  /> $</p>
+                        <p class="data">arrive date : <span th:text="${ reserve.dateIn }"  /></p>
+                        <p class="data">leave date : <span th:text="${ reserve.dateOut }"  /></p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="orders2" class="data profile1">
+                    <p>Your orders</p>
+                    <a id="showOrders" class="prof" href="#"><img th:src="@{/images/img/show_1_25X25.png}"></a>
+                </div>
+
+
+
+                <div id="orders1" class="data profile1">
+                    <p>Your orders</p>
+                    <a id="hideOrders" class="prof" href="#"><img th:src="@{/images/img/hide_1_25X25.png}"></a>
+                    <div id="orders">
+                        <div th:each="order : ${orders}">
+                        <div>
+                            <img class="img" th:src="@{/images/img1/2.jpg}" width="250" height="150">
+                        </div>
+                        <p class="data">Number : <span th:text="${ order.room.number }"  /></p>
+                        <p class="data">Price : <span th:text="${ order.totalPrice }"  /> $</p>
+                        <p class="data">arrive date : <span th:text="${ order.dateIn }"  /></p>
+                        <p class="data">leave date : <span th:text="${ order.dateOut }"  /></p>
+                        <p class="more"><a class="deleteR" th:href="@{{id}(id=${order.id})}">Cancel</a></p>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+      <div class=" container chooseDateDialog1" id="delete" title="Chose dates" hidden>
+                        <div id="hide" class="row">
+                            <p>This dioloq window.You can moove it in the window</p>
+
+                            delete this reserve?
+
+                            <div>
+                               <a id="cancelD" class="previous" href="#">Previous</a>
+                               <a id="deleteForm" class="makeorder" href="75" data-method="delete">Delete</a>
+                            </div>
+                        </div>
+         </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="twelve columns">
+                    <p id="text">Foot</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

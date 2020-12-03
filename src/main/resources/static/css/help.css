@@ -1,0 +1,321 @@
+.loginform {
+    padding-top: 50px;
+    border: black dashed;
+    margin: 0 auto;
+}
+
+.name {
+    border: dashed blue;
+}
+
+.form {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.label {
+    display: inline-block;
+    width: 200px;
+    /*for mobile 30%*/
+    vertical-align: top;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.date {
+    text-align: left;
+    margin-right: auto;
+}
+
+.error {
+    display: inline-block;
+    width: 200px;
+    /*for mobile 30%*/
+    vertical-align: top;
+    text-align: left;
+    margin-right: 10px;
+    font-weight: bold;
+    color: red;
+}
+
+.form input {
+    color: black;
+}
+
+.form label.valid {
+    background: url(../images/img/check_green_3.png) no-repeat;
+    color: green;
+}
+
+input.submit {
+    background-color: cornflowerblue;
+}
+
+.button {
+    text-decoration: none;
+    background-color: cornflowerblue;
+    border: solid;
+    border-radius: 5px;
+}
+
+.registration {
+    text-align: center;
+    padding-bottom: 100px;
+}
+
+.gg {
+    color: rgba(155, 155, 155, 0);
+}
+
+div.rooms {
+    border-bottom: solid blue;
+    display: flex;
+}
+
+.rowdata {
+    border-bottom: solid blue;
+    display: flex;
+}
+
+.data {
+    border-radius: 5px;
+    margin: 10px 40px 10px 0;
+    padding: 10px 10px 0 10px;
+    background-color: rgba(0, 0, 0, .1);
+    display: flex;
+    flex-flow: column;
+    vertical-align: middle;
+    position: relative;
+}
+
+.profile {
+    background: url(../images/img/profile.png) no-repeat top center;
+    background-color: rgba(0, 0, 0, .1);
+    height: 110px;
+    border-radius: 50%;
+    margin-top: 30px;
+}
+
+.profile1 {
+    margin-top: 30px;
+}
+
+.prof {
+    background-color: rgba(33, 33, 33, .1);
+    border: none;
+    border-radius: 0%;
+    margin: 0%;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 5%;
+}
+
+.add {
+    background-color: rgba(33, 33, 33, 0);
+    box-shadow: none;
+    padding-top: 15px;
+}
+
+.textcenter {
+    display: inline;
+}
+
+.floatleft {
+    float: left;
+    width: 40%;
+    padding-top: 30px;
+}
+
+.right {
+    margin: 0%;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 5%;
+}
+
+.bottom {
+    float: right;
+}
+
+.head {
+    margin: 10px 40px 0 0;
+}
+
+.info {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 50%;
+    height: 30%;
+    margin: auto;
+    text-align: center;
+}
+
+.preinfo {
+    color: rgba(155, 155, 155, 0);
+    margin-bottom: 0;
+}
+
+p.desc {
+    margin-bottom: 0;
+}
+
+p.more {
+    margin-bottom: 0;
+    margin-top: auto;
+}
+
+p.more1 {
+    margin-top: 0;
+}
+
+p.more a {
+    text-decoration: none;
+    background-color: rgb(240, 173, 28);
+    border-radius: 10px;
+    float: right;
+    font: 1.3em;
+    padding: 3px 20px 3px 20px;
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    text-transform: uppercase;
+}
+
+p.more a:hover {
+    background-color: cornflowerblue;
+}
+
+.img {
+    border-radius: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.data1 {
+    border-radius: 5px;
+    margin: 10px 40px 10px 0;
+    padding: 10px 10px 0 10px;
+    background-color: rgba(0, 0, 0, .1);
+    vertical-align: middle;
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.rowdesc {
+    margin-top: 30px;
+}
+
+p.desc1 {
+    margin-left: 10px;
+    border: solid gray;
+    border-radius: 10px;
+    padding: 2px 10px 2px 10px;
+}
+
+p.desc11 {
+    display: inline;
+}
+
+.makeorder,
+.previous {
+    text-decoration: none;
+    background-color: rgb(240, 173, 28);
+    border-radius: 10px;
+    float: right;
+    font: 1.3em;
+    padding: 3px 20px 3px 20px;
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    text-transform: uppercase;
+}
+
+.previous {
+    float: left;
+}
+
+.previous:hover,
+.makeorder:hover {
+    background-color: cornflowerblue;
+}
+
+.previous.dialog {
+    position: absolute;
+    left: 5%;
+    top: 85%;
+}
+
+.makeorder.dialog {
+    position: absolute;
+    right: 5%;
+    top: 85%;
+}
+
+.chooseDateDialog {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 50%;
+    height: 70%;
+    margin: auto;
+    text-align: center;
+    border: solid dimgray;
+    background: url(../images/img/bg_page.png);
+    border-radius: 10px;
+}
+
+.chooseDateDialog1 {
+    position: absolute;
+    top: 35%;
+    left: 25%;
+    width: 50%;
+    text-align: center;
+    border: solid dimgray;
+    background: url(../images/img/bg_page.png);
+    border-radius: 10px;
+}
+
+.margintop1 {
+    margin-top: -10px;
+    border-radius: 0 0 5px 5px;
+}
+
+.borderradiosbottomnone {
+    border-radius: 5px 5px 0 0;
+}
+
+@media(min-width: 200px) and (max-width:600px) {
+    div.rooms {
+        color: rgba(155, 155, 155, 0);
+        background-color: blue;
+        height: 1px;
+    }
+    .rowdata {
+        border: solid blue;
+        border-radius: 10px;
+        padding-left: 10px;
+        margin: 10px 0 10px 0;
+        display: flex;
+        flex-flow: row wrap;
+    }
+    .preinfo {
+        margin-bottom: 0;
+        color: black;
+        padding-right: 5px;
+    }
+    .data {
+        display: flex;
+        flex-flow: row wrap;
+        border: black solid;
+    }
+    p.desc {
+        padding-right: 30px;
+    }
+}

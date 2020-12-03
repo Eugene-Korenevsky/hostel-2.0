@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>the best hostel in the word</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/normalize.css}"/>
+    <link rel="stylesheet" th:href="@{/css/sm-core-css.css.css}"/>
+    <link rel="stylesheet" th:href="@{/css/sm-clean.css.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main1.css}"/>
+    <link rel="stylesheet" th:href="@{/css/skeleton.css}"/>
+    <link rel="stylesheet" th:href="@{/css/help.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.validate.js}"></script>
+</head>
+<script>
+    $(document).ready(function() {
+
+        $("#form").validate({
+            rules: {
+                password: {
+                    required: true,
+                    minlength: 3
+                },
+                username: {
+                    required: true,
+                    email: true
+                },
+                name: {
+                    required: true,
+                    minlength: 3
+                },
+                surname: {
+                    required: true,
+                    minlength: 3
+                }
+            },
+            messages: {
+                password: {
+                    required: "Write your password",
+                    minlength: "min 3 letters"
+                },
+                j_username: {
+                    required: "Write your email",
+                    email: "Wrong email adress"
+                },
+                name: {
+                    required: "Write your name",
+                    minlength: "min 3 letters"
+                },
+                surname: {
+                    required: "Write your surname",
+                    minlength: "min 3 letters"
+                }
+            },
+            success: function(label) {
+                label.addClass("valid").text("-")
+            }
+        });
+    });
+
+</script>
+
+<body>
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="three columns">
+                <a href="home.html">
+                    <img th:src="@{/images/img/hotel_1_1.png}" class="logo"/>
+                </a>
+                <p class="text">.com</p>
+            </div>
+
+
+            <div class="nine columns">
+                <nav class="nav">
+                    <div sec:authorize="!isAuthenticated()">
+                        <a href="loginForm">log In</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a href="logout">log Out</a>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">
+                        <a href="registration">registratinion</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a href="profile">cabinet</a>
+                    </div>
+
+
+                    <a href="#">About Us</a>
+                    <a class="current-page" href="roomsList">rooms</a>
+                    <a class="home" href="home.html">Home</a>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="twelve columns">
+            <form class="form" name="f" method="POST" th:action="@{/registration}" id="form" th:object="${user}">
+                <p>Registration</p>
+                <p>
+                    <!--<input type="text" th:field="*{name}"/>
+                     end::allButValidation[] -->
+
+                    <label class="label" for="username">Email : </label>
+                    <input id="username" type="email" name="username" th:field="*{email}" required/>
+                    <label for="username" class="error"></label>
+                    <span class="validationError"
+                          th:if="${#fields.hasErrors('email')}"
+                          th:errors="*{email}">Email Error</span>
+                </p>
+                <p>
+                    <label class="label" for="password"> Password : </label>
+                    <input id="password" type="password" name="password" th:field="*{password}" required minlength="3"/>
+                    <label for="password" class="error"></label>
+                    <span class="validationError"
+                          th:if="${#fields.hasErrors('password')}"
+                          th:errors="*{password}">password Error</span>
+                </p>
+                <p>
+                    <label class="label" for="name"> Name : </label>
+                    <input id="name" type="text" name="name" th:field="*{name}" required minlength="3"/>
+                    <label for="name" class="error"></label>
+                    <span class="validationError"
+                          th:if="${#fields.hasErrors('name')}"
+                          th:errors="*{name}">Name Error</span>
+                </p>
+                <p>
+                    <label class="label" for="surname"> Surname : </label>
+                    <input id="surname" type="text" name="surname" th:field="*{surname}" required minlength="3"/>
+                    <label for="surname" class="error"></label>
+                    <span class="validationError"
+                          th:if="${#fields.hasErrors('surname')}"
+                          th:errors="*{surname}">Surname Error</span>
+                </p>
+                <p><input id="submit" class="submit" name="submit" type="submit" value="submit"/></p>
+            </form>
+          <!--  <s:form id="form" class="form" name="f" method="POST" action="registration"
+                    modelAttribute="user">
+                <p>Registration</p>
+                <p>
+                    <label class="label" for="j_username">Email : </label>
+                    <s:input path="email" type="email" name="j_username"/>
+                    <label for="j_username" class="error"></label>
+                    <label for="j_username" class="success" hidden></label>
+                    <s:errors path="email"/>
+                </p>
+                <p>
+                    <label class="label" for="j_password"> Password : </label>
+                    <s:input path="password" type="password" name="password"/>
+                    <label for="password" class="error"></label>
+                    <label for="password" class="success" hidden></label>
+                    <s:errors path="password"/>
+                </p>
+                <p>
+                    <label class="label" for="name"> Name : </label>
+                    <s:input path="name" type="text" name="name"/>
+                    <label for="name" class="error"></label>
+                    <label for="name" class="success" hidden></label>
+                    <s:errors path="name"/>
+                </p>
+                <p>
+                    <label class="label" for="surname"> Surname : </label>
+                    <s:input path="surname" type="text" name="surname"/>
+                    <label for="surname" class="error"></label>
+                    <label for="surname" class="success" hidden></label>
+                    <s:errors path="surname"/>
+                </p>
+                <p><input class="submit" name="submit" type="submit" value="submit"/></p>
+            </s:form>-->
+
+
+        </div>
+    </div>
+
+</div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="twelve columns">
+                <p id="text">Foot</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+
+</html>

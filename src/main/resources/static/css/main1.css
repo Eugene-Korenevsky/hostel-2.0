@@ -1,0 +1,142 @@
+* {
+    box-sizing: border-box;
+}
+
+header {
+    background-image: url(../images/img/header.jpg);
+    background-size: cover;
+    padding: 20px 0 20px 0;
+    padding-top: 20px;
+}
+
+.text {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    text-transform: uppercase;
+    font-size: 2em;
+    font-weight: bold;
+    font-style: italic;
+    color: #ff932d;
+    padding-bottom: 25px;
+    padding-top: 5px;
+    padding-left: 50px;
+}
+
+footer {
+    background: linear-gradient(to bottom, rgb(100, 100, 100), rgb(0, 0, 0));
+    padding: 10px 0 10px 0;
+    margin-top: 40px;
+}
+
+body {
+    background: url(../images/img/bg_page.png);
+    max-width: 97%;
+    margin: 0 auto;
+}
+
+.news {
+    clear: both;
+}
+
+a {
+    margin-right: 3px;
+    margin-left: 3px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.7);
+    text-shadow: 0px -1px 1px rgba(000, 000, 000, 0.2), 0px 1px 0px rgba(255, 255, 255, 0.3);
+    background-color: rgb(240, 173, 28);
+    -webkit-transition: all 1.5s;
+    -moz-transition: all 1.5s;
+    -o-transition: all 1.5s;
+    transition: all 1.5s;
+}
+
+.sm li a:hover,
+.sm a:hover {
+    background-color: rgba(240, 173, 28, .7);
+    background-color: cornflowerblue;
+    color: black;
+}
+
+.nav a:hover {
+    background-color: cornflowerblue;
+    color: black;
+}
+
+.nav a.home {
+    background: url(../images/img/home_1.png) no-repeat left center;
+    background-position: 5px 3px;
+    background-color: rgb(240, 173, 28);
+    padding-left: 30px;
+}
+
+.nav a.home:hover {
+    background: url(../images/img/home_1.png) no-repeat left center;
+    background-position: 5px 3px;
+    background-color: cornflowerblue;
+    padding-left: 30px;
+}
+
+.sm {
+    padding-top: 30px;
+    background-color: rgba(0, 0, 0, 0);
+    min-width: 100%;
+    float: left;
+}
+
+.signOut {
+    float: right;
+}
+
+html {
+    background-color: rgb(225, 238, 253);
+}
+
+.nav a.current-page {
+    background-color: cornflowerblue;
+}
+
+.logo {
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    -webkit-animation: logo 3s;
+    animation: logo 3s;
+}
+
+.nav a {
+    float: right;
+    margin-top: 30px;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    text-transform: uppercase;
+    font-size: 1.3em;
+    color: black;
+    margin-right: 20px;
+    padding: 0 10px 0 10px;
+}
+
+.pagebutton a {
+    margin-top: 30px;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    text-transform: uppercase;
+    color: black;
+    margin-right: 20px;
+    font-size: 1.8em;
+    padding: 0 10px 0 10px;
+    display: flex;
+    flex-flow: column;
+}
+
+.pagebutton {
+    margin-top: 30px;
+}
+
+.pagebutton a:hover {
+    background-color: cornflowerblue;
+    color: black;
+}

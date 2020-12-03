@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>the best hostel in the word</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/normalize.css}"/>
+    <link rel="stylesheet" th:href="@{/css/sm-core-css.css.css}"/>
+    <link rel="stylesheet" th:href="@{/css/sm-clean.css.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main1.css}"/>
+    <link rel="stylesheet" th:href="@{/css/skeleton.css}"/>
+    <link rel="stylesheet" th:href="@{/css/help.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.smartmenus.min.js}"></script>
+    <script>
+        $(document).ready(function() {
+                    var url1;
+                    $("#hello").hide();
+                    var room1;
+
+                     $(".chRoom").on("click", function() {
+                        var value1 = $(this).attr('href');
+                        $("#changeRoom").show();
+                        console.log("id = " + value1);
+                        $.getJSON("room/"+value1,function( room ){
+                            room1 = room;
+                            $("#price1").attr('value', room.price);
+                            $("#sits1").attr('value', room.sits);
+                            $("#number1").attr('value', room.number);
+                            $("#classRoom").attr('value', room.roomClass);
+                            for (var i = 0; i < room.descriptions.length; i++) {
+                              str = room.descriptions[i].replace(/\s/g, '');
+                              $("#roomDesc").append('<p class="desc" id="' + str + '">'
+                              + room.descriptions[i]
+                              + '<a class="removeDesc"  href="' + str + '">Delete</a></p>');
+                            }
+
+                        });
+                        return false;
+                     });
+
+                     $("#cancelCh").click(function() {
+                         for (var i = 0; i < room1.descriptions.length; i++) {
+                            str = room1.descriptions[i].replace(/\s/g, '');
+                            $("#" + str).remove();
+                         }
+                         $("#changeRoom").hide();
+                         return false;
+                     });
+
+                     $("html").on("click", ".removeDesc", function() {
+                        var desc = $(this).attr('href');
+                        $("#" + desc).remove();
+                        for (var i = 0; i < room1.descriptions.length; i++) {
+                            str = room1.descriptions[i].replace(/\s/g, '');
+                            if (desc == str) {
+                                console.log("ok");
+                                console.log(room1.descriptions[i]);
+                                room1.descriptions.splice(i, 1);
+                                break;
+                            }
+                        }
+                        return false;
+                    });
+
+                     $(".addDesc").on("click", function() {
+                       var desc = $(this).attr('href');
+                       str = desc.replace(/\s/g, '');
+                       found = false;
+                       for (var i = 0; i < room1.descriptions.length; i++) {
+                           if (desc == room1.descriptions[i]) {
+                               found = true;
+                               break;
+                           }
+                       }
+                       if (!found) {
+                           $("#roomDesc").append('<p class="desc" id="' + str + '">' +
+                               desc + '<a class="removeDesc"  href="' + str + '">Delete</a></p>');
+                           room1.descriptions.push(desc);
+                       }
+                       return false;
+                     });
+
+                     $("#submit1").click(function() {
+                        console.log("sub");
+
+                        room1.number = $("#number1").val();
+                        room1.sits = $("#sits1").val();
+                        room1.price = $("#price1").val();
+                        room1.roomClass = $("#classRoom").val();
+
+                        result_json = JSON.stringify(room1);
+                        $.ajax({
+                           type: 'PUT',
+                           url: 'room',
+                           contentType: 'application/json',
+                           data: result_json,
+                           success: function(data) {
+                                console.log("done");
+                                document.location.href = "room";
+                           },
+                           error:  function(){
+                              alert('Ошибка!');
+                           }
+                        });
+                        return false;
+
+
+                     });
+
+
+
+
+                    $("#cancelD").click(function() {
+                        $("#delete").hide();
+                        return false;
+                    });
+
+                    $(".deleteR").on("click", function() {
+                       var value1 = $(this).attr('href');
+                       console.log(value1);
+                       $("#delete").show();
+                       url1 = value1;
+                       console.log("url = "+url1);
+                       return false;
+                    });
+
+                     $("#deleteForm").click(function(event) {
+                         event.preventDefault();
+                         var req = new XMLHttpRequest();
+                         req.open("DELETE", "room/" + url1, false);
+                         req.send(null);
+                         document.location.href = "room";
+                     });
+
+
+
+                    $("#makeRoom").on("click", function(e) {
+                        console.log("hello");
+                        $("#hello").show();
+                        return false;
+                    });
+
+                    $("#cancel").click(function() {
+                        $("#hello").hide();
+                        return false;
+                    });
+
+                    $("#form").validate({
+                         rules: {
+                            number: {
+                            required: true,
+                            min: 1
+                            },
+                         sits: {
+                            required: true,
+                            min: 1
+                             },
+                         price: {
+                            required: true,
+                            min: 0
+                            },
+                         roomClass: {
+                            required: true,
+                            minlength: 1
+                            }
+                         },
+                         messages: {
+                         number: {
+                            required: "Write room number",
+                            min: "can't be less then 0"
+                            },
+                         sits: {
+                            required: "Write sits",
+                            min: "can't be less then 0"
+                            },
+                         price: {
+                            required: "Write price",
+                            min: "can't be less then 0"
+                            },
+                         roomClass: {
+                            required: "Write class",
+                            minlength: "min 1 letter"
+                         }
+                         },
+                         success: function(label) {
+                             label.addClass("valid").text("-")
+                             }
+                    });
+
+                });
+
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="three columns">
+                <a href="home.html">
+                    <img th:src="@{/images/img/hotel_1_1.png}" class="logo"/>
+                </a>
+                <p class="text">.com</p>
+            </div>
+
+
+            <div class="nine columns">
+                <nav class="nav">
+                    <!--  <security:authorize access="!isAuthenticated()">
+                           <a href="../loginForm">log In</a>
+                      </security:authorize>
+                      <security:authorize access="isAuthenticated()">
+                            <a href="../logout">log Out</a>
+                      </security:authorize>
+                      <security:authorize access="!isAuthenticated()">
+                            <a href="../registration">registratinion</a>
+                      </security:authorize>
+                      <security:authorize access="isAuthenticated()">
+                             <a class="current-page" href="profile">cabinet</a>
+                      </security:authorize>-->
+
+
+                    <a href="#">About Us</a>
+                    <a href="../room">rooms</a>
+                    <a class="home" href="../home">Home</a>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</header>
+
+
+<div class="container">
+
+
+    <div class="row rooms">
+        <div class="seven columns">
+            <p class="preinfo">: </p>
+        </div>
+        <div class="five columns">
+            <div class="textcenter">
+                <p class="floatleft">Add new room</p>
+                <p class="add">
+                    <a id="makeRoom" class="add" href="#"><img th:src="@{/images/img/add1_1_50X50.png}"/></a>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div th:each="room : ${rooms}">
+        <div class="row rowdata">
+
+            <div class="four columns imgd">
+                <img class="img" th:src="@{/images/img1/1.jpg}" width="250" height="150"/>
+            </div>
+            <div class="five columns">
+                <div class="data profile1">
+                    <p>Number : <span th:text="${room.number}"/></p>
+                </div>
+                <div class="data profile1">
+                    <p>Sits : <span th:text="${room.sits}"/></p>
+                </div>
+                <div class="data profile1">
+                    <p>Class : <span th:text="${room.roomClass}"/></p>
+                </div>
+                <div class="data profile1">
+                    <p>Price : <span th:text="${room.price}"/></p>
+                </div>
+                <div class="data1 profile1 borderradiosbottomnone">
+                    <p>Descriptions :
+                        <div th:each="description : ${room.descriptions}">
+                    <p class="desc1"><span th:text="${ description.description }"/></p>
+                </div>
+                </p>
+            </div>
+            <div class="data margintop1">
+                <p class="more"><a class="chRoom" th:href="@{{id}(id=${room.id})}">Change</a></p>
+            </div>
+            <div class="data profile1">
+                <p>Delete Room</p>
+                <p class="more right"><a class="deleteR" th:href="@{{id}(id=${room.id})}">Delete</a></p>
+            </div>
+
+        </div>
+        <div class="three columns">
+
+        </div>
+
+    </div>
+</div>
+</div>
+
+
+<div class=" container chooseDateDialog1" id="hello" title="Chose dates">
+    <div id="hide" class="row">
+        <p>This dioloq window.You can moove it in the window</p>
+
+        <form id="form" class="form" method="POST" th:action="@{room}" th:object="${room}">
+            <label class="label" for="number">Number : </label>
+            <input id="number" type="number" name="number" th:field="*{number}"/>
+            <label for="number" class="error"></label>
+            <span class="validationError"
+                  th:if="${#fields.hasErrors('number')}"
+                  th:errors="*{number}">Number Error</span>
+
+            <label class="label" for="sits">Sits : </label>
+            <input id="sits" type="number" name="sits" th:field="*{sits}"/>
+            <label for="sits" class="error"></label>
+            <span class="validationError"
+                  th:if="${#fields.hasErrors('sits')}"
+                  th:errors="*{sits}">Sits Error</span>
+
+            <label class="label" for="roomClass">RoomClass : </label>
+            <input id="roomClass" type="text" name="roomClass" th:field="*{roomClass}"/>
+            <label for="roomClass" class="error"></label>
+            <span class="validationError"
+                  th:if="${#fields.hasErrors('roomClass')}"
+                  th:errors="*{roomClass}">RoomClass Error</span>
+
+            <label class="label" for="price">Price : </label>
+            <input id="price" type="number" step="0.01" name="price" th:field="*{price}"/>
+            <label for="price" class="error"></label>
+            <span class="validationError"
+                  th:if="${#fields.hasErrors('price')}"
+                  th:errors="*{price}">Price Error</span>
+            <div th:each="item : ${descriptionsList}" >
+                <label class"label" for="${item.description}">
+                <p th:text="${item.description}"/>
+                </label>
+                <input type="checkbox" th:field="*{descriptions}" th:value="${item.description}"/>
+            </div>
+            <div class="row">
+                <p><input id="submit" class="makeorder dialog" name="submit" type="submit" value="Create"/></p>
+        </form>
+
+        <a id="cancel" class="previous dialog" href="#">Previous</a></p>
+    </div>
+</div>
+</div>
+
+</div>
+<div class=" container chooseDateDialog1" id="delete" title="Chose dates" hidden>
+    <div id="hide1" class="row">
+        <p>This dioloq window.You can moove it in the window</p>
+
+        delete this room?
+
+        <div>
+            <a id="cancelD" class="previous" href="#">Previous</a>
+            <a id="deleteForm" class="makeorder" href="75" data-method="delete">Delete</a>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- change room -->
+
+<div class=" container chooseDateDialog1" id="changeRoom" title="Chose dates" hidden>
+    <div id="hide2" class="row">
+        <p>This dioloq window.You can moove it in the window</p>
+
+         <form id="form1" class="form" action="1223">
+             <label class="label" for="roomNumber1">Number </label>
+             <input id="number1" name="roomNumber1" type="number" value="">
+             <label class="error" for="roomNumber"></label>
+
+             <label class="label" for="sits">Sits </label>
+             <input id="sits1" name="sits" type="number" value="">
+             <label class="error" for="sits"></label>
+
+             <label class="label" for="class">Class </label>
+             <input id="classRoom" name="class" type="text" value="">
+             <label class="error" for="class"></label>
+
+             <label class="label" for="price">price </label>
+             <input id="price1" step="0.01" name="price" type="number" value="">
+             <label class="error" for="price"></label>
+
+             <div class=" data" id="roomDesc">
+
+
+             </div>
+
+             <div class=" data">
+                 <div th:each="item : ${descriptionsList}" >
+                     <p class="desc" id="${item.id}">
+                         <span th:text="${item.description}"/>
+                         <strong hidden>.</strong>
+                         <a class="addDesc" th:href="@{{id}(id=${item.description})}">Add</a>
+                     </p>
+                 </div>
+
+             </div>
+
+
+             <div class="row">
+                 <p><input id="submit1" class="makeorder dialog" name="submit" type="submit" value="submit"/></p>
+         </form>
+
+        <a id="cancelCh" class="previous dialog" href="#">Previous</a></p>
+    </div>
+</div>
+
+</div>
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="twelve columns">
+                <p id="text">Foot</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+
+
+</html>
