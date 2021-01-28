@@ -23,7 +23,7 @@
             $("#hello").hide();
             $("#shouldLogin").hide();
              $("#confirm1").click(function(evt) {
-             $.post("../order",dates,function(data){
+             $.post("../orders",dates,function(data){
                 document.location.href = "../profile";
              });
 
@@ -38,7 +38,7 @@
                    console.log(dates.roomId);
 
 
-                $.post("../order/isFree",dates,function(data){
+                $.post("../orders/isFree",dates,function(data){
                   if(data == "notFree"){
                      $("#res").hide();
                      $("#message1").hide();

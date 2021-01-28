@@ -46,7 +46,7 @@
 
 
                     <a href="#">About Us</a>
-                    <a class="current-page" href="room">rooms</a>
+                    <a class="current-page" th:href="@{/rooms}">rooms</a>
                     <a class="home" th:href="@{/}">Home</a>
                 </nav>
             </div>
@@ -112,7 +112,7 @@
                 <div th:each="description : ${room.descriptions}">
                     <p th:text="${description.description}" class="desc"/>
                 </div>
-                <p class="more"><a th:href="@{/room/{id}(id=${room.id})}">More</a></p>
+                <p class="more"><a th:href="@{/rooms/{id}(id=${room.id})}">More</a></p>
             </div>
 
 

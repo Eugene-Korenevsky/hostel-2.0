@@ -50,7 +50,7 @@
                    console.log(user1);
                    $.ajax({
                       type: 'PUT',
-                      url: 'user',
+                      url: 'user/' + user1.id,
                       contentType: 'application/json',
                       data: result_json,
                       success: function(data) {
@@ -64,6 +64,7 @@
                    return false;
                  });
             });
+
 
     </script>
 </head>

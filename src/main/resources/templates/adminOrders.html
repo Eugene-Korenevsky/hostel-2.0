@@ -22,6 +22,7 @@
           var dates = {};
           $(".confirm").on("click",function(){
                var value1 = $(this).attr('href');
+               console.log(value1);
                $("#confirmOrder").show();
                $.getJSON("orders/"+value1,function( order ){
                    console.log(order);
@@ -40,7 +41,7 @@
                    console.log(dates.roomId);
                    result_json = JSON.stringify(reserve);
                    console.log(result_json);
-                   $.post("reserve/isFree",dates,function(data){
+                   $.post("reserves/isFree",dates,function(data){
                       console.log(data);
                       if(data == "notFree"){
                          $("#message1").show();
@@ -71,12 +72,12 @@
                       result_json = JSON.stringify(reserve);
                            $.ajax({
                               type: 'POST',
-                              url: 'reserve',
+                              url: 'reserves',
                               contentType: 'application/json',
                               data: result_json,
                               success: function(data) {
                                    console.log("done");
-                                   document.location.href = "reserve";
+                                   document.location.href = "reserves";
                               },
                               error:  function(){
                                  alert('Ошибка!');
@@ -98,9 +99,9 @@
           $("#deleteForm").click(function(event) {
                  event.preventDefault();
                  var req = new XMLHttpRequest();
-                 req.open("DELETE", "order/" + url1, false);
+                 req.open("DELETE", "orders/" + url1, false);
                  req.send(null);
-                 document.location.href = "order";
+                 document.location.href = "orders";
           });
           $("#cancelD").click(function() {
                   $("#delete").hide();
@@ -144,7 +145,7 @@
 
 
                         <a href="#">About Us</a>
-                        <a class="current-page" href="roomsList">rooms</a>
+                        <a class="current-page" href="../rooms">rooms</a>
                         <a href="../">Home</a>
                     </nav>
                 </div>
