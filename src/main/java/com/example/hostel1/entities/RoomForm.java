@@ -2,22 +2,46 @@ package com.example.hostel1.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode
 public class RoomForm {
+
     @JsonProperty("number")
+    @NotNull
+    @Min(value = 1,message = "min value is 1")
     private int number;
+
+
     @JsonProperty("sits")
+    @Min(value = 1,message = "min value is 1")
+    @NotNull
     private int sits;
+
+
     @JsonProperty("price")
+    @Min(value = 0,message = "min value is 0")
+    @NotNull
     private double price;
+
+
     @JsonProperty("roomClass")
+    @Size(min = 1,max = 2,message = "class must have at least 1 letter and not larger then 2 letters")
+    @NotNull
     private String roomClass;
+
+
     @JsonProperty("descriptions")
     private List<String> descriptions;
+
+
     @JsonProperty("id")
     private long id;
 
@@ -32,26 +56,5 @@ public class RoomForm {
 
     public RoomForm() {
 
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Room room = (Room) o;
-        return (room.getId() == this.getId() && room.getNumber() == this.getNumber()
-                && room.getPrice() == this.getPrice() && room.getSits() == this.getSits()
-                && room.getRoomClass().equals(this.getRoomClass()));
-    }
-
-    @Override
-    public int hashCode() {
-        int result = 17;
-        result = 37 * result + (int) id;
-        result = 37 * result + number;
-        result = 37 * result + (int) price;
-        result = 37 * result + sits;
-        result = 37 * result + roomClass.hashCode();
-        return result;
     }
 }

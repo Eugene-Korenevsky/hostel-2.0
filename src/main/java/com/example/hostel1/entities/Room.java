@@ -2,16 +2,19 @@ package com.example.hostel1.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @Entity
+@EqualsAndHashCode
 @Table(name = "room")
 public class Room implements Serializable {
 
@@ -28,6 +31,7 @@ public class Room implements Serializable {
 
     @NotNull
     @Column(name = "CLASS")
+    @Size(min = 1,max = 2,message = "class must have at least 1 letter and not larger then 2 letters")
     private String roomClass;
 
     @NotNull

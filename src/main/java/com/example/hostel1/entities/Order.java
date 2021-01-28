@@ -1,14 +1,17 @@
 package com.example.hostel1.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Data
 @Entity
+@EqualsAndHashCode
 @Table(name = "orders")
 public class Order implements Serializable {
     @Id
@@ -20,6 +23,7 @@ public class Order implements Serializable {
 
     @NotNull
     @Column(name = "TOTAL_PRICE")
+    @Min(value = 0, message = "min price can not be less then 0")
     private double totalPrice;
 
 
@@ -44,25 +48,4 @@ public class Order implements Serializable {
     @JoinColumn(name = "ROOM_ID", referencedColumnName = "ID")
     private Room room;
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return (order.getId() == this.getId() && order.getRoom().equals(this.getRoom()) &&
-                order.getUser().equals(this.getUser()) && order.getDateIn() == this.getDateIn()
-                && order.getDateOut() == this.getDateOut() && order.getTotalPrice() == this.getTotalPrice());
-    }
-
-    public int hashCode() {
-        int result = 17;
-        result = 37 * result + (int) id;
-        result = 37 * result + user.hashCode();
-        result = 37 * result + room.hashCode();
-        result = 37 * result + dateIn.hashCode();
-        result = 37 * result + dateOut.hashCode();
-        result = 37 * result + (int) totalPrice;
-        return result;
-    }
 }
