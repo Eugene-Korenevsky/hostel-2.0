@@ -1,45 +1,79 @@
 package com.example.hostel1.servicies.logic;
 
+import com.example.hostel1.AppProperties;
 import com.example.hostel1.entities.Role;
 import com.example.hostel1.entities.User;
+import com.example.hostel1.entities.ValidationError;
+import com.example.hostel1.helpers.validation.MyValidator;
 import com.example.hostel1.repositories.RoleRepository;
 import com.example.hostel1.repositories.UserRepository;
 import com.example.hostel1.servicies.UserService;
 import com.example.hostel1.servicies.exceptions.EmailIsExistException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.hostel1.servicies.exceptions.ValidationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+import javax.transaction.Transactional;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.util.ArrayList;
+import java.util.Set;
+
+
 @Service
-public class UserServiceImpl implements UserService {
-    @Autowired
+public class UserServiceImpl extends GenericServiceImpl<User> implements UserService {
+
+    private AppProperties appProperties;
+
     private UserRepository userRepository;
-    @Autowired
+
     private RoleRepository roleRepository;
 
-    @Override
-    public void registration(User user) throws EmailIsExistException {
-        Iterable<User> users = userRepository.findAll();
-        if (isUserExist(users, user)) {
-            throw new EmailIsExistException();
-        } else {
-            long a = 2;
-            Role role = roleRepository.findById(a).orElse(new Role());
-            user.setRole(role);
-            userRepository.save(user);
-        }
-
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, AppProperties appProperties) {
+        super(userRepository, User.class);
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.appProperties = appProperties;
     }
 
-    private boolean isUserExist(Iterable<User> users, User user) {
-        boolean found = false;
-        for (User user1 : users) {
-            if (user1.getEmail().equals(user.getEmail())) {
-                found = true;
-                break;
+    @Transactional(rollbackOn = Exception.class)
+    @Override
+    public void registration(User user) throws EmailIsExistException, ValidationException {
+        if (user != null) {
+            Validator validator = MyValidator.getValidator();
+            Set<ConstraintViolation<User>> violations = validator.validate(user);
+            if (violations.size() < 1) {
+                if (isUserExist(user)) {
+                    throw new EmailIsExistException();
+                } else {
+                    Role role = roleRepository.findByRole(appProperties.getDefaultRole());
+                    User user1 = new User();
+                    user1.setRole(role);
+                    user1.setEmail(user.getEmail());
+                    user1.setName(user.getName());
+                    user1.setPassword(user.getPassword());
+                    user1.setSurname(user.getSurname());
+                    userRepository.save(user1);
+                }
+            } else {
+                ValidationError validationError = new ValidationError();
+                ArrayList<String> errors = new ArrayList<>();
+                for (ConstraintViolation<User> constraintViolation : violations) {
+                    errors.add(constraintViolation.getMessage());
+                }
+                validationError.setErrors(errors);
+                throw new ValidationException("validation error", validationError);
             }
-        }
-        return found;
+        } else throw new ValidationException("user must not be null");
+    }
+
+    @Override
+    public User findByEmail(String email) throws ValidationException {
+        if (email != null) {
+            return userRepository.findByEmail(email);
+        } else throw new ValidationException("email must not be null");
+    }
+
+    private boolean isUserExist(User user) {
+        return userRepository.findByEmail(user.getEmail()) != null;
     }
 }
