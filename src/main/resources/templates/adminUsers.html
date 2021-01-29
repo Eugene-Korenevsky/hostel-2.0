@@ -22,7 +22,7 @@
                     var value1 = $(this).attr('href');
                     console.log(value1);
                     $("#hello").show();
-                    $.getJSON("user/"+value1,function( user ){
+                    $.getJSON("users/"+value1,function( user ){
                       console.log(user);
                       user1 = user;
                     });
@@ -50,7 +50,7 @@
                    console.log(user1);
                    $.ajax({
                       type: 'PUT',
-                      url: 'user/' + user1.id,
+                      url: 'users/' + user1.id,
                       contentType: 'application/json',
                       data: result_json,
                       success: function(data) {
@@ -84,23 +84,23 @@
 
             <div class="nine columns">
                 <nav class="nav">
-                    <!--<security:authorize access="!isAuthenticated()">
-                         <a href="loginForm">log In</a>
-                    </security:authorize>
-                    <security:authorize access="isAuthenticated()">
-                          <a href="logout">log Out</a>
-                    </security:authorize>
-                    <security:authorize access="!isAuthenticated()">
-                          <a href="registration.html">registratinion</a>
-                    </security:authorize>
-                    <security:authorize access="isAuthenticated()">
-                           <a href="profile">cabinet</a>
-                    </security:authorize>-->
+                    <div sec:authorize="!isAuthenticated()">
+                        <a href="loginForm">log In</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a th:href="@{/logout}" >log Out</a>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/registration}">registratinion</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a class="current-page" th:href="@{/profile}">cabinet</a>
+                    </div>
 
 
                     <a href="#">About Us</a>
-                    <a class="current-page" href="roomsList">rooms</a>
-                    <a class="home" href="home.html">Home</a>
+                    <a th:href="@{/rooms}">rooms</a>
+                    <a class="home" th:href="@{/}">Home</a>
                 </nav>
             </div>
         </div>

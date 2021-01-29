@@ -24,7 +24,7 @@
                         var value1 = $(this).attr('href');
                         $("#changeRoom").show();
                         console.log("id = " + value1);
-                        $.getJSON("room/"+value1,function( room ){
+                        $.getJSON("rooms/"+value1,function( room ){
                             room1 = room;
                             $("#price1").attr('value', room.price);
                             $("#sits1").attr('value', room.sits);
@@ -94,7 +94,7 @@
                         result_json = JSON.stringify(room1);
                         $.ajax({
                            type: 'PUT',
-                           url: 'room',
+                           url: 'rooms',
                            contentType: 'application/json',
                            data: result_json,
                            success: function(data) {
@@ -130,7 +130,7 @@
                      $("#deleteForm").click(function(event) {
                          event.preventDefault();
                          var req = new XMLHttpRequest();
-                         req.open("DELETE", "room/" + url1, false);
+                         req.open("DELETE", "rooms/" + url1, false);
                          req.send(null);
                          document.location.href = "room";
                      });
@@ -214,23 +214,23 @@
 
             <div class="nine columns">
                 <nav class="nav">
-                    <!--  <security:authorize access="!isAuthenticated()">
-                           <a href="../loginForm">log In</a>
-                      </security:authorize>
-                      <security:authorize access="isAuthenticated()">
-                            <a href="../logout">log Out</a>
-                      </security:authorize>
-                      <security:authorize access="!isAuthenticated()">
-                            <a href="../registration">registratinion</a>
-                      </security:authorize>
-                      <security:authorize access="isAuthenticated()">
-                             <a class="current-page" href="profile">cabinet</a>
-                      </security:authorize>-->
+                    <div sec:authorize="!isAuthenticated()">
+                        <a href="loginForm">log In</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a th:href="@{/logout}" >log Out</a>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/registration}">registratinion</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a class="current-page" th:href="@{/profile}">cabinet</a>
+                    </div>
 
 
                     <a href="#">About Us</a>
-                    <a href="../room">rooms</a>
-                    <a class="home" href="../home">Home</a>
+                    <a th:href="@{/rooms}">rooms</a>
+                    <a class="home" th:href="@{/}">Home</a>
                 </nav>
             </div>
         </div>

@@ -28,7 +28,7 @@
           $("#deleteForm").click(function(event) {
                  event.preventDefault();
                  var req = new XMLHttpRequest();
-                 req.open("DELETE", "order/" + url1, false);
+                 req.open("DELETE", "orders/" + url1, false);
                  req.send(null);
                  document.location.href = "profile";
           });
@@ -97,22 +97,19 @@
                             <a href="loginForm">log In</a>
                         </div>
                         <div sec:authorize="isAuthenticated()">
-                            <!-- <form method="POST" th:action="@{/logout}">
-                                 <input type="submit" value="Logout"/>
-                             </form>-->
-                            <a th:href="@{/exit}" >log Out</a>
+                            <a th:href="@{/logout}" >log Out</a>
                         </div>
                         <div sec:authorize="!isAuthenticated()">
-                            <a href="registration">registratinion</a>
+                            <a th:href="@{/registration}">registratinion</a>
                         </div>
                         <div sec:authorize="isAuthenticated()">
-                            <a href="profile">cabinet</a>
+                            <a class="current-page" th:href="@{/profile}">cabinet</a>
                         </div>
 
 
                         <a href="#">About Us</a>
-                        <a href="room">rooms</a>
-                        <a class = "home"  href="/">Home</a>
+                        <a th:href="@{/rooms}">rooms</a>
+                        <a class="home" th:href="@{/}">Home</a>
                     </nav>
                 </div>
             </div>

@@ -31,23 +31,23 @@
 
             <div class="nine columns">
                 <nav class="nav">
-                    <!-- <security:authorize access="!isAuthenticated()">
-                          <a href="../loginForm">log In</a>
-                     </security:authorize>
-                     <security:authorize access="isAuthenticated()">
-                           <a href="../logout">log Out</a>
-                     </security:authorize>
-                     <security:authorize access="!isAuthenticated()">
-                           <a href="../registration">registratinion</a>
-                     </security:authorize>
-                     <security:authorize access="isAuthenticated()">
-                            <a class="current-page" href="profile">cabinet</a>
-                     </security:authorize>-->
+                    <div sec:authorize="!isAuthenticated()">
+                        <a href="loginForm">log In</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a th:href="@{/logout}" >log Out</a>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/registration}">registratinion</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a class="current-page" th:href="@{/profile}">cabinet</a>
+                    </div>
 
 
                     <a href="#">About Us</a>
-                    <a href="../room">rooms</a>
-                    <a class="home" href="../home">Home</a>
+                    <a th:href="@{/rooms}">rooms</a>
+                    <a class="home" th:href="@{/}">Home</a>
                 </nav>
             </div>
         </div>
@@ -83,10 +83,10 @@
         </div>
         <div class="five columns">
             <nav class="pagebutton">
-                <p><a href="room">Rooms</a></p>
-                <p><a href="reserve">Reserves</a></p>
-                <p><a href="order">Orders</a></p>
-                <p><a href="user">Users</a></p>
+                <p><a th:href="@{/admin/rooms}">Rooms</a></p>
+                <p><a th:href="@{/admin/reserves}">Reserves</a></p>
+                <p><a th:href="@{/admin/orders}">Orders</a></p>
+                <p><a th:href="@{/admin/users}">Users</a></p>
             </nav>
         </div>
     </div>

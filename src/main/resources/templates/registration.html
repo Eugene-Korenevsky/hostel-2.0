@@ -81,19 +81,19 @@
                         <a href="loginForm">log In</a>
                     </div>
                     <div sec:authorize="isAuthenticated()">
-                        <a href="logout">log Out</a>
+                        <a th:href="@{/logout}" >log Out</a>
                     </div>
                     <div sec:authorize="!isAuthenticated()">
-                        <a href="registration">registratinion</a>
+                        <a class="current-page" th:href="@{/registration}">registratinion</a>
                     </div>
                     <div sec:authorize="isAuthenticated()">
-                        <a href="profile">cabinet</a>
+                        <a  th:href="@{/profile}">cabinet</a>
                     </div>
 
 
                     <a href="#">About Us</a>
-                    <a class="current-page" href="roomsList">rooms</a>
-                    <a class="home" href="home.html">Home</a>
+                    <a th:href="@{/rooms}">rooms</a>
+                    <a class="home" th:href="@{/}">Home</a>
                 </nav>
             </div>
         </div>
