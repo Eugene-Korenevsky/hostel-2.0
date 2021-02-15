@@ -78,22 +78,22 @@
             <div class="nine columns">
                 <nav class="nav">
                     <div sec:authorize="!isAuthenticated()">
-                        <a href="loginForm">log In</a>
+                        <a class="current-page" th:href="@{/loginForm}" th:text="#{login.button}"></a>
                     </div>
                     <div sec:authorize="isAuthenticated()">
-                        <a th:href="@{/logout}" >log Out</a>
+                        <a class="current-page" th:href="@{/logout}" th:text="#{logout.button}"></a>
                     </div>
                     <div sec:authorize="!isAuthenticated()">
-                        <a class="current-page" th:href="@{/registration}">registratinion</a>
+                        <a th:href="@{/registration}" th:text="#{register.button}"></a>
                     </div>
                     <div sec:authorize="isAuthenticated()">
-                        <a  th:href="@{/profile}">cabinet</a>
+                        <a th:href="@{/profile}" th:text="#{cabinet.button}"></a>
                     </div>
 
 
-                    <a href="#">About Us</a>
-                    <a th:href="@{/rooms}">rooms</a>
-                    <a class="home" th:href="@{/}">Home</a>
+                    <a href="#" th:text="#{about}"></a>
+                    <a th:href="@{/rooms}" th:text="#{room.button}"></a>
+                    <a class="home" th:href="@{/}" th:text="#{main.page}"></a>
                 </nav>
             </div>
         </div>
@@ -104,77 +104,41 @@
     <div class="row">
         <div class="twelve columns">
             <form class="form" name="f" method="POST" th:action="@{/registration}" id="form" th:object="${user}">
-                <p>Registration</p>
+                <p th:text="#{register.button}"></p>
                 <p>
-                    <!--<input type="text" th:field="*{name}"/>
-                     end::allButValidation[] -->
-
-                    <label class="label" for="username">Email : </label>
+                    <label class="label" for="username" th:text="#{login.form.email}"></label>
                     <input id="username" type="email" name="username" th:field="*{email}" required/>
                     <label for="username" class="error"></label>
                     <span class="validationError"
                           th:if="${#fields.hasErrors('email')}"
-                          th:errors="*{email}">Email Error</span>
+                          th:errors="*{email}" th:text="#{error.email}"></span>
                 </p>
                 <p>
-                    <label class="label" for="password"> Password : </label>
+                    <label class="label" for="password" th:text="#{login.form.password}"></label>
                     <input id="password" type="password" name="password" th:field="*{password}" required minlength="3"/>
                     <label for="password" class="error"></label>
                     <span class="validationError"
                           th:if="${#fields.hasErrors('password')}"
-                          th:errors="*{password}">password Error</span>
+                          th:errors="*{password}" th:text="#{error.password}"></span>
                 </p>
                 <p>
-                    <label class="label" for="name"> Name : </label>
+                    <label class="label" for="name" th:text="#{login.form.name}"></label>
                     <input id="name" type="text" name="name" th:field="*{name}" required minlength="3"/>
                     <label for="name" class="error"></label>
                     <span class="validationError"
                           th:if="${#fields.hasErrors('name')}"
-                          th:errors="*{name}">Name Error</span>
+                          th:errors="*{name}" th:text="#{error.name}"></span>
                 </p>
                 <p>
-                    <label class="label" for="surname"> Surname : </label>
+                    <label class="label" for="surname" th:text="#{login.form.surname}"></label>
                     <input id="surname" type="text" name="surname" th:field="*{surname}" required minlength="3"/>
                     <label for="surname" class="error"></label>
                     <span class="validationError"
                           th:if="${#fields.hasErrors('surname')}"
-                          th:errors="*{surname}">Surname Error</span>
+                          th:errors="*{surname}" th:text="#{error.surname}"></span>
                 </p>
                 <p><input id="submit" class="submit" name="submit" type="submit" value="submit"/></p>
             </form>
-          <!--  <s:form id="form" class="form" name="f" method="POST" action="registration"
-                    modelAttribute="user">
-                <p>Registration</p>
-                <p>
-                    <label class="label" for="j_username">Email : </label>
-                    <s:input path="email" type="email" name="j_username"/>
-                    <label for="j_username" class="error"></label>
-                    <label for="j_username" class="success" hidden></label>
-                    <s:errors path="email"/>
-                </p>
-                <p>
-                    <label class="label" for="j_password"> Password : </label>
-                    <s:input path="password" type="password" name="password"/>
-                    <label for="password" class="error"></label>
-                    <label for="password" class="success" hidden></label>
-                    <s:errors path="password"/>
-                </p>
-                <p>
-                    <label class="label" for="name"> Name : </label>
-                    <s:input path="name" type="text" name="name"/>
-                    <label for="name" class="error"></label>
-                    <label for="name" class="success" hidden></label>
-                    <s:errors path="name"/>
-                </p>
-                <p>
-                    <label class="label" for="surname"> Surname : </label>
-                    <s:input path="surname" type="text" name="surname"/>
-                    <label for="surname" class="error"></label>
-                    <label for="surname" class="success" hidden></label>
-                    <s:errors path="surname"/>
-                </p>
-                <p><input class="submit" name="submit" type="submit" value="submit"/></p>
-            </s:form>-->
 
 
         </div>

@@ -20,7 +20,37 @@
                     $("#hello").hide();
                     var room1;
 
-                     $(".chRoom").on("click", function() {
+                    $(".chRoom").on("click", function() {
+                        var value1 = $(this).attr('href');
+                        console.log("id = " + value1);
+                        $.getJSON("rooms/"+value1,function( room ){
+
+                        }).done(function(response){
+                            console.log(response);
+                            room1 = response;
+                            console.log('room id is' + room1.id);
+                            $("#changeRoom").show();
+                            $("#price1").attr('value', room.price);
+                            $("#sits1").attr('value', room.sits);
+                            $("#number1").attr('value', room.number);
+                            $("#classRoom").attr('value', room.roomClass);
+                            for (var i = 0; i < room.descriptions.length; i++) {
+                              str = room.descriptions[i].replace(/\s/g, '');
+                              $("#roomDesc").append('<p class="desc" id="' + str + '">'
+                              + room.descriptions[i]
+                              + '<a class="removeDesc"  href="' + str + '">Delete</a></p>');
+                            }
+                        }).fail(function(response){
+                              if(response.status === 404){
+                                 $("#badR").show();
+                              }else{
+                                $("#error").show();
+                              }
+                        });
+                        return false;
+                     });
+
+                    /* $(".chRoom").on("click", function() {
                         var value1 = $(this).attr('href');
                         $("#changeRoom").show();
                         console.log("id = " + value1);
@@ -39,7 +69,7 @@
 
                         });
                         return false;
-                     });
+                     });*/
 
                      $("#cancelCh").click(function() {
                          for (var i = 0; i < room1.descriptions.length; i++) {
@@ -82,8 +112,45 @@
                        }
                        return false;
                      });
-
                      $("#submit1").click(function() {
+                        console.log("sub");
+
+                        room1.number = $("#number1").val();
+                        room1.sits = $("#sits1").val();
+                        room1.price = $("#price1").val();
+                        room1.roomClass = $("#classRoom").val();
+
+                        result_json = JSON.stringify(room1);
+                        $.ajax({
+                           type: 'PUT',
+                           url: 'rooms/' + room1.id,
+                           contentType: 'application/json',
+                           data: result_json,
+                           success: function(output) {
+                                         console.log(output);
+                                         document.location.href = "rooms";
+                                       },
+                           error: function(output){
+                                 console.log(output.status);
+                                 if(output.status === 400){
+                                    console.log(output);
+                                    console.log(output.body);
+                                    console.log(output.responseJSON.errors);
+                                    console.log(output.responseText);
+                                    $("#changeRoom").hide();
+                                    $("#badR").show();
+                                 }else{
+                                    $("#changeRoom").hide();
+                                    $("#error").show();
+                                 }
+                           }
+                        });
+                        return false;
+
+
+                     });
+
+                    /* $("#submit1").click(function() {
                         console.log("sub");
 
                         room1.number = $("#number1").val();
@@ -108,15 +175,24 @@
                         return false;
 
 
-                     });
+                     });*/
 
 
+                    $("#cancelBadR").click(function() {
+                        $("#badR").hide();
+                        return false;
+                    });
+
+                    $("#cancelError").click(function() {
+                        $("#error").hide();
+                        return false;
+                    });
 
 
                     $("#cancelD").click(function() {
                         $("#delete").hide();
                         return false;
-                    });
+                      });
 
                     $(".deleteR").on("click", function() {
                        var value1 = $(this).attr('href');
@@ -127,14 +203,31 @@
                        return false;
                     });
 
-                     $("#deleteForm").click(function(event) {
+                     /*$("#deleteForm").click(function(event) {
                          event.preventDefault();
                          var req = new XMLHttpRequest();
                          req.open("DELETE", "rooms/" + url1, false);
                          req.send(null);
                          document.location.href = "room";
+                     });*/
+                     $("#deleteForm").click(function(event) {
+                         $.ajax({
+                                   type: 'DELETE',
+                                   url: 'rooms/' + url1,
+                                   success: function(output) {
+                                      console.log(status);
+                                      document.location.href = "rooms";
+                                   },
+                                   error: function(response){
+                                      if(response.status === 404){
+                                         $("#badR").show();
+                                      }else{
+                                         $("#error").show();
+                                      }
+                                   }
+                            });
+                            return false;
                      });
-
 
 
                     $("#makeRoom").on("click", function(e) {
@@ -215,22 +308,22 @@
             <div class="nine columns">
                 <nav class="nav">
                     <div sec:authorize="!isAuthenticated()">
-                        <a href="loginForm">log In</a>
+                        <a th:href="@{/loginForm}" th:text="#{login.button}"></a>
                     </div>
                     <div sec:authorize="isAuthenticated()">
-                        <a th:href="@{/logout}" >log Out</a>
+                        <a th:href="@{/logout}" th:text="#{logout.button}"></a>
                     </div>
                     <div sec:authorize="!isAuthenticated()">
-                        <a th:href="@{/registration}">registratinion</a>
+                        <a th:href="@{/registration}" th:text="#{register.button}"></a>
                     </div>
                     <div sec:authorize="isAuthenticated()">
-                        <a class="current-page" th:href="@{/profile}">cabinet</a>
+                        <a class="current-page" th:href="@{/profile}" th:text="#{cabinet.button}"></a>
                     </div>
 
 
-                    <a href="#">About Us</a>
-                    <a th:href="@{/rooms}">rooms</a>
-                    <a class="home" th:href="@{/}">Home</a>
+                    <a href="#" th:text="#{about}"></a>
+                    <a th:href="@{/rooms}" th:text="#{room.button}"></a>
+                    <a class="home" th:href="@{/}" th:text="#{main.page}"></a>
                 </nav>
             </div>
         </div>
@@ -248,7 +341,7 @@
         </div>
         <div class="five columns">
             <div class="textcenter">
-                <p class="floatleft">Add new room</p>
+                <p class="floatleft" th:text="#{create.room.button}"></p>
                 <p class="add">
                     <a id="makeRoom" class="add" href="#"><img th:src="@{/images/img/add1_1_50X50.png}"/></a>
                 </p>
@@ -266,30 +359,34 @@
             </div>
             <div class="five columns">
                 <div class="data profile1">
-                    <p>Number : <span th:text="${room.number}"/></p>
+                    <p th:text="#{room.number}"></p>
+                    <span th:text="${room.number}"/>
                 </div>
                 <div class="data profile1">
-                    <p>Sits : <span th:text="${room.sits}"/></p>
+                    <p th:text="#{room.sits}"></p>
+                    <span th:text="${room.sits}"/>
                 </div>
                 <div class="data profile1">
-                    <p>Class : <span th:text="${room.roomClass}"/></p>
+                    <p th:text="#{room.class.message}"></p>
+                    <span th:text="${room.roomClass}"/>
                 </div>
                 <div class="data profile1">
-                    <p>Price : <span th:text="${room.price}"/></p>
+                    <p th:text="#{room.price}"></p>
+                    <span th:text="${room.price}"/>
                 </div>
                 <div class="data1 profile1 borderradiosbottomnone">
-                    <p>Descriptions :
+                    <p th:text="#{room.descriptions}">
                         <div th:each="description : ${room.descriptions}">
                     <p class="desc1"><span th:text="${ description.description }"/></p>
                 </div>
                 </p>
             </div>
             <div class="data margintop1">
-                <p class="more"><a class="chRoom" th:href="@{{id}(id=${room.id})}">Change</a></p>
+                <p class="more"><a th:text="#{change}" class="chRoom" th:href="@{{id}(id=${room.id})}"></a></p>
             </div>
             <div class="data profile1">
-                <p>Delete Room</p>
-                <p class="more right"><a class="deleteR" th:href="@{{id}(id=${room.id})}">Delete</a></p>
+                <p th:text="#{delete.room.button}"></p>
+                <p class="more right"><a th:text="#{delete}" class="deleteR" th:href="@{{id}(id=${room.id})}"></a></p>
             </div>
 
         </div>
@@ -304,31 +401,30 @@
 
 <div class=" container chooseDateDialog1" id="hello" title="Chose dates">
     <div id="hide" class="row">
-        <p>This dioloq window.You can moove it in the window</p>
 
-        <form id="form" class="form" method="POST" th:action="@{room}" th:object="${room}">
-            <label class="label" for="number">Number : </label>
+        <form id="form" class="form" method="POST" th:action="@{rooms}" th:object="${room}">
+            <label th:text="#{room.number}" class="label" for="number"></label>
             <input id="number" type="number" name="number" th:field="*{number}"/>
             <label for="number" class="error"></label>
             <span class="validationError"
                   th:if="${#fields.hasErrors('number')}"
                   th:errors="*{number}">Number Error</span>
 
-            <label class="label" for="sits">Sits : </label>
+            <label th:text="#{room.sits}" class="label" for="sits"></label>
             <input id="sits" type="number" name="sits" th:field="*{sits}"/>
             <label for="sits" class="error"></label>
             <span class="validationError"
                   th:if="${#fields.hasErrors('sits')}"
                   th:errors="*{sits}">Sits Error</span>
 
-            <label class="label" for="roomClass">RoomClass : </label>
+            <label class="label" for="roomClass" th:text="#{room.class.message}"></label>
             <input id="roomClass" type="text" name="roomClass" th:field="*{roomClass}"/>
             <label for="roomClass" class="error"></label>
             <span class="validationError"
                   th:if="${#fields.hasErrors('roomClass')}"
                   th:errors="*{roomClass}">RoomClass Error</span>
 
-            <label class="label" for="price">Price : </label>
+            <label class="label" for="price" th:text="#{room.price}"></label>
             <input id="price" type="number" step="0.01" name="price" th:field="*{price}"/>
             <label for="price" class="error"></label>
             <span class="validationError"
@@ -341,10 +437,10 @@
                 <input type="checkbox" th:field="*{descriptions}" th:value="${item.description}"/>
             </div>
             <div class="row">
-                <p><input id="submit" class="makeorder dialog" name="submit" type="submit" value="Create"/></p>
+                <p><input id="submit" class="makeorder dialog" name="submit" type="submit" th:text="#{confirm}"/></p>
         </form>
 
-        <a id="cancel" class="previous dialog" href="#">Previous</a></p>
+        <a id="cancel" class="previous dialog" href="#" th:text="#{cancel}"></a></p>
     </div>
 </div>
 </div>
@@ -352,13 +448,10 @@
 </div>
 <div class=" container chooseDateDialog1" id="delete" title="Chose dates" hidden>
     <div id="hide1" class="row">
-        <p>This dioloq window.You can moove it in the window</p>
-
-        delete this room?
-
+        <p th:text="#{delete.room.button}"></p>
         <div>
-            <a id="cancelD" class="previous" href="#">Previous</a>
-            <a id="deleteForm" class="makeorder" href="75" data-method="delete">Delete</a>
+            <a id="cancelD" class="previous" th:text="#{cancel}" href="#"></a>
+            <a id="deleteForm" class="makeorder" href="75" th:text="#{delete}"></a>
         </div>
 
 
@@ -371,22 +464,21 @@
 
 <div class=" container chooseDateDialog1" id="changeRoom" title="Chose dates" hidden>
     <div id="hide2" class="row">
-        <p>This dioloq window.You can moove it in the window</p>
 
          <form id="form1" class="form" action="1223">
-             <label class="label" for="roomNumber1">Number </label>
+             <label class="label" th:text="#{room.number}" for="roomNumber1"></label>
              <input id="number1" name="roomNumber1" type="number" value="">
              <label class="error" for="roomNumber"></label>
 
-             <label class="label" for="sits">Sits </label>
+             <label class="label" for="sits" th:text="#{room.sits}"></label>
              <input id="sits1" name="sits" type="number" value="">
              <label class="error" for="sits"></label>
 
-             <label class="label" for="class">Class </label>
+             <label class="label" for="class" th:text="#{room.class.message}"></label>
              <input id="classRoom" name="class" type="text" value="">
              <label class="error" for="class"></label>
 
-             <label class="label" for="price">price </label>
+             <label class="label" for="price" th:text="#{room.price}"></label>
              <input id="price1" step="0.01" name="price" type="number" value="">
              <label class="error" for="price"></label>
 
@@ -408,10 +500,10 @@
 
 
              <div class="row">
-                 <p><input id="submit1" class="makeorder dialog" name="submit" type="submit" value="submit"/></p>
+                 <p><input id="submit1" class="makeorder dialog" name="submit" type="submit" th:text="#{confirm}"/></p>
          </form>
 
-        <a id="cancelCh" class="previous dialog" href="#">Previous</a></p>
+        <a id="cancelCh" class="previous dialog" href="#" th:text="#{cancel}"></a></p>
     </div>
 </div>
 

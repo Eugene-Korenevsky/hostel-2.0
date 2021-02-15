@@ -32,22 +32,22 @@
             <div class="nine columns">
                 <nav class="nav">
                     <div sec:authorize="!isAuthenticated()">
-                        <a href="loginForm">log In</a>
+                        <a th:href="@{/loginForm}" th:text="#{login.button}"></a>
                     </div>
                     <div sec:authorize="isAuthenticated()">
-                        <a th:href="@{/logout}" >log Out</a>
+                        <a th:href="@{/logout}" th:text="#{logout.button}"></a>
                     </div>
                     <div sec:authorize="!isAuthenticated()">
-                        <a th:href="@{/registration}">registratinion</a>
+                        <a th:href="@{/registration}" th:text="#{register.button}"></a>
                     </div>
                     <div sec:authorize="isAuthenticated()">
-                        <a  th:href="@{/profile}">cabinet</a>
+                        <a th:href="@{/profile}" th:text="#{cabinet.button}"></a>
                     </div>
 
 
-                    <a href="#">About Us</a>
-                    <a class="current-page" th:href="@{/rooms}">rooms</a>
-                    <a class="home" th:href="@{/}">Home</a>
+                    <a href="#" th:text="#{about}"></a>
+                    <a class="current-page" th:href="@{/rooms}" th:text="#{room.button}"></a>
+                    <a class="home" th:href="@{/}" th:text="#{main.page}"></a>
                 </nav>
             </div>
         </div>
@@ -58,27 +58,27 @@
 <div class="container">
     <div class="row ">
         <div class="twelve columns">
-            search
+
         </div>
     </div>
     <div class="row rooms">
         <div class="four columns">
-            Photo
+            <p th:text="#{room.photo}"></p>
         </div>
         <div class="one columns">
-            Number
+            <p th:text="#{room.number}"></p>
         </div>
         <div class="one columns">
-            Sits
+            <p th:text="#{room.sits}"></p>
         </div>
         <div class="one columns">
-            class
+            <p th:text="#{room.class.message}"></p>
         </div>
         <div class="two columns">
-            price
+            <p th:text="#{room.price}"></p>
         </div>
         <div class="three columns">
-            descriptions
+            <p th:text="#{create.room.parameters}"></p>
         </div>
 
     </div>
@@ -91,19 +91,19 @@
                 <img class="img" th:src="@{/images/img1/1.jpg}" width="250" height="150"/>
             </div>
             <div class="one columns data">
-                <p class="preinfo">Number : </p>
+                <p class="preinfo" th:text="#{room.number}"></p>
                 <p th:text="${room.number}" class="info"/>
             </div>
             <div class="one columns data">
-                <p class="preinfo">Sits : </p>
+                <p class="preinfo" th:text="#{room.sits}"></p>
                 <p th:text="${room.sits}" class="info"/>
             </div>
             <div class="one columns data">
-                <p class="preinfo">Class : </p>
+                <p class="preinfo" th:text="#{room.class}"></p>
                 <p th:text="${room.roomClass}" class="info"/>
             </div>
             <div class="two columns data">
-                <p class="preinfo">Price : </p>
+                <p class="preinfo" th:text="#{room.price}"></p>
                 <p th:text="${room.price}" class="info"/>
             </div>
 
@@ -112,7 +112,7 @@
                 <div th:each="description : ${room.descriptions}">
                     <p th:text="${description.description}" class="desc"/>
                 </div>
-                <p class="more"><a th:href="@{/rooms/{id}(id=${room.id})}">More</a></p>
+                <p class="more"><a th:href="@{/rooms/{id}(id=${room.id})}" th:text="#{more.button}"></a></p>
             </div>
 
 

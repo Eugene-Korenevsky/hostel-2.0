@@ -57,22 +57,22 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <div sec:authorize="!isAuthenticated()">
-                            <a href="loginForm">log In</a>
+                            <a th:href="@{/loginForm}" th:text="#{login.button}"></a>
                         </div>
                         <div sec:authorize="isAuthenticated()">
-                            <a th:href="@{/logout}" >log Out</a>
+                            <a th:href="@{/logout}" th:text="#{logout.button}"></a>
                         </div>
                         <div sec:authorize="!isAuthenticated()">
-                            <a th:href="@{/registration}">registratinion</a>
+                            <a th:href="@{/registration}" th:text="#{register.button}"></a>
                         </div>
                         <div sec:authorize="isAuthenticated()">
-                            <a class="current-page" th:href="@{/profile}">cabinet</a>
+                            <a class="current-page" th:href="@{/profile}" th:text="#{cabinet.button}"></a>
                         </div>
 
 
-                        <a href="#">About Us</a>
-                        <a th:href="@{/rooms}">rooms</a>
-                        <a class="home" th:href="@{/}">Home</a>
+                        <a href="#" th:text="#{about}"></a>
+                        <a th:href="@{/rooms}" th:text="#{room.button}"></a>
+                        <a class="home" th:href="@{/}" th:text="#{main.page}"></a>
                     </nav>
                 </div>
             </div>
@@ -82,13 +82,13 @@
     <div class="container">
         <div class="row rooms">
             <div class="four columns">
-                Client
+                <p th:text="#{client}"></p>
             </div>
             <div class="seven columns">
-                Room
+                <p th:text="#{room}"></p>
             </div>
             <div class="two columns">
-                total price
+                <p th:text="#{total.price}"></p>
             </div>
         </div>
 
@@ -99,9 +99,9 @@
 
                 </div>
                 <div>
-                    <p> Name : <span th:text="${reserve.user.name}"/></p>
-                    <p>Surname : <span th:text="${reserve.user.surname}"/></p>
-                    <p>Email : <span th:text="${reserve.user.email}"/></p>
+                    <p th:text="#{login.form.mame}"><span th:text="${reserve.user.name}"/></p>
+                    <p th:text="#{login.form.surname}"><span th:text="${reserve.user.surname}"/></p>
+                    <p th:text="#{login.form.email}"><span th:text="${reserve.user.email}"/></p>
                 </div>
             </div>
             <div class="seven columns data ">
@@ -109,16 +109,16 @@
                     <img th:src="@{/images/img1/1.jpg}" width="250" height="150"/>
                 </div>
                 <div>
-                    <p>Number : <span th:text="${reserve.room.number}"/></p>
-                    <p>Arrive date : <span th:text="${reserve.dateIn}"/></p>
-                    <p>Leave date : <span th:text="${reserve.dateOut}"/></p>
+                    <p th:text="#{room.number}"><span th:text="${reserve.room.number}"/></p>
+                    <p th:text="#{date.arrive}"><span th:text="${reserve.dateIn}"/></p>
+                    <p th:text="#{date.leave}"><span th:text="${reserve.dateOut}"/></p>
                 </div>
             </div>
             <div class="two columns data ">
                 <div>
                     <p> <span th:text="${reserve.totalPrice}"/></p>
                 </div>
-                <p class="more"><a class="deleteR" th:href="@{{id}(id=${reserve.id})}">Cancel</a></p>
+                <p class="more"><a th:text="#{delete}" class="deleteR" th:href="@{{id}(id=${reserve.id})}"></a></p>
             </div>
         </div>
         </div>
@@ -128,13 +128,10 @@
 
      <div class=" container chooseDateDialog1" id="delete" title="Chose dates" hidden>
                     <div id="hide" class="row">
-                        <p>This dioloq window.You can moove it in the window</p>
-
-                        delete this reserve?
-
+                        <p th:text="#{delete.reserve}"></p>
                         <div>
-                           <a id="cancelD" class="previous" href="#">Previous</a>
-                           <a id="deleteForm" class="makeorder" href="75" data-method="delete">Delete</a>
+                           <a th:text="#{cancel}" id="cancelD" class="previous" href="#"></a>
+                           <a th:text="#{delete}" id="deleteForm" class="makeorder" href="75" data-method="delete"></a>
                         </div>
                     </div>
      </div>

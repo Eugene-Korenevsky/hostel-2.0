@@ -94,22 +94,22 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <div sec:authorize="!isAuthenticated()">
-                            <a href="loginForm">log In</a>
+                            <a th:href="@{/loginForm}" th:text="#{login.button}"></a>
                         </div>
                         <div sec:authorize="isAuthenticated()">
-                            <a th:href="@{/logout}" >log Out</a>
+                            <a th:href="@{/logout}" th:text="#{logout.button}"></a>
                         </div>
                         <div sec:authorize="!isAuthenticated()">
-                            <a th:href="@{/registration}">registratinion</a>
+                            <a th:href="@{/registration}" th:text="#{register.button}"></a>
                         </div>
                         <div sec:authorize="isAuthenticated()">
-                            <a class="current-page" th:href="@{/profile}">cabinet</a>
+                            <a class="current-page" th:href="@{/profile}" th:text="#{cabinet.button}"></a>
                         </div>
 
 
-                        <a href="#">About Us</a>
-                        <a th:href="@{/rooms}">rooms</a>
-                        <a class="home" th:href="@{/}">Home</a>
+                        <a href="#" th:text="#{about}"></a>
+                        <a th:href="@{/rooms}" th:text="#{room.button}"></a>
+                        <a class="home" th:href="@{/}" th:text="#{main.page}"></a>
                     </nav>
                 </div>
             </div>
@@ -123,68 +123,72 @@
             </div>
             <div class="five columns">
                <div class="data profile1">
-                    <p> Name : <span th:text="${ user.name }"  /></p>
-                    <p class="more"><a href="#">Change</a></p>
+                    <p th:text="#{login.form.name}"></p>
+                   <span th:text="${ user.name }"  />
                 </div>
                 <div class="data profile1">
-                    <p>Surname : <span th:text="${ user.surname }"  /></p>
-                    <p class="more"><a href="#">Change</a></p>
+                    <p th:text="#{login.form.surname}"></p>
+                    <span th:text="${ user.surname }"  />
                 </div>
                 <div class="data profile1">
-                    <p>Email : <span th:text="${ user.email }"  /></p>
-                    <p class="more"><a href="#">Change</a></p>
-                </div>
-                <div class="data profile1">
-                    <p>Here you can change your password</p>
-                    <p class="more"><a href="#">Change</a></p>
+                    <p th:text="#{login.form.email}"></p>
+                    <span th:text="${ user.email }"  />
                 </div>
 
             </div>
             <div class="five columns">
 
                 <div id="reserves2" class="data profile1">
-                    <p>Your reserves</p>
+                    <p th:text="#{my.reserve.button}"></p>
                     <a id="showReserves" class="prof" href="#"><img th:src="@{/images/img/show_1_25X25.png}"></a>
                 </div>
 
 
                 <div id="reserves1" class="data profile1">
-                    <p>Your reserves</p>
+                    <p th:text="#{my.reserve.button}"></p>
                     <a id="hideReserves" class="prof" href="#"><img th:src="@{/images/img/hide_1_25X25.png}"></a>
                     <div id="reserves">
                         <div th:each="reserve : ${reserves}" >
                         <div>
                             <img class="img" th:src="@{/images/img1/2.jpg}" width="250" height="150">
                         </div>
-                        <p class="data">Number : <span th:text="${ reserve.room.number }"  /></p>
-                        <p class="data">Price : <span th:text="${ reserve.totalPrice }"  /> $</p>
-                        <p class="data">arrive date : <span th:text="${ reserve.dateIn }"  /></p>
-                        <p class="data">leave date : <span th:text="${ reserve.dateOut }"  /></p>
+                        <p th:text="#{room.number}" class="data"></p>
+                            <span th:text="${ reserve.room.number }"  />
+                        <p th:text="#{room.price}" class="data"></p>
+                            <span th:text="${ reserve.totalPrice }"  /> $
+                        <p class="data" th:text="#{date.arrive}"></p>
+                            <span th:text="${ reserve.dateIn }"  />
+                        <p class="data" th:text="#{date.leave}"></p>
+                            <span th:text="${ reserve.dateOut }"  />
                         </div>
                     </div>
                 </div>
 
 
                 <div id="orders2" class="data profile1">
-                    <p>Your orders</p>
+                    <p th:text="#{my.orders.button}"></p>
                     <a id="showOrders" class="prof" href="#"><img th:src="@{/images/img/show_1_25X25.png}"></a>
                 </div>
 
 
 
                 <div id="orders1" class="data profile1">
-                    <p>Your orders</p>
+                    <p th:text="#{my.orders.button}"></p>
                     <a id="hideOrders" class="prof" href="#"><img th:src="@{/images/img/hide_1_25X25.png}"></a>
                     <div id="orders">
                         <div th:each="order : ${orders}">
                         <div>
                             <img class="img" th:src="@{/images/img1/2.jpg}" width="250" height="150">
                         </div>
-                        <p class="data">Number : <span th:text="${ order.room.number }"  /></p>
-                        <p class="data">Price : <span th:text="${ order.totalPrice }"  /> $</p>
-                        <p class="data">arrive date : <span th:text="${ order.dateIn }"  /></p>
-                        <p class="data">leave date : <span th:text="${ order.dateOut }"  /></p>
-                        <p class="more"><a class="deleteR" th:href="@{{id}(id=${order.id})}">Cancel</a></p>
+                        <p class="data" th:text="#{room.number}"></p>
+                            <span th:text="${ order.room.number }"  />
+                        <p class="data" th:text="#{room.price}"></p>
+                            <span th:text="${ order.totalPrice }"  /> $
+                        <p class="data" th:text="#{date.arrive}"></p>
+                            <span th:text="${ order.dateIn }"  />
+                        <p class="data" th:text="#{date.leave}"></p>
+                            <span th:text="${ order.dateOut }"  />
+                        <p class="more"><a th:text="#{delete}"class="deleteR" th:href="@{{id}(id=${order.id})}"></a></p>
                         </div>
 
                     </div>
@@ -196,13 +200,10 @@
     </div>
       <div class=" container chooseDateDialog1" id="delete" title="Chose dates" hidden>
                         <div id="hide" class="row">
-                            <p>This dioloq window.You can moove it in the window</p>
-
-                            delete this reserve?
-
+                            <p th:text="#{delete.order}"></p>
                             <div>
-                               <a id="cancelD" class="previous" href="#">Previous</a>
-                               <a id="deleteForm" class="makeorder" href="75" data-method="delete">Delete</a>
+                               <a id="cancelD" th:text="#{cancel}" class="previous" href="#"></a>
+                               <a id="deleteForm" class="makeorder" href="75" th:text="#{delete}"></a>
                             </div>
                         </div>
          </div>

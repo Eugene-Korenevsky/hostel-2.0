@@ -32,22 +32,22 @@
             <div class="nine columns">
                 <nav class="nav">
                     <div sec:authorize="!isAuthenticated()">
-                        <a href="loginForm">log In</a>
+                        <a th:href="@{/loginForm}" th:text="#{login.button}"></a>
                     </div>
                     <div sec:authorize="isAuthenticated()">
-                        <a th:href="@{/logout}" >log Out</a>
+                        <a th:href="@{/logout}" th:text="#{logout.button}"></a>
                     </div>
                     <div sec:authorize="!isAuthenticated()">
-                        <a th:href="@{/registration}">registratinion</a>
+                        <a th:href="@{/registration}" th:text="#{register.button}"></a>
                     </div>
                     <div sec:authorize="isAuthenticated()">
-                        <a class="current-page" th:href="@{/profile}">cabinet</a>
+                        <a class="current-page" th:href="@{/profile}" th:text="#{cabinet.button}"></a>
                     </div>
 
 
-                    <a href="#">About Us</a>
-                    <a th:href="@{/rooms}">rooms</a>
-                    <a class="home" th:href="@{/}">Home</a>
+                    <a href="#" th:text="#{about}"></a>
+                    <a th:href="@{/rooms}" th:text="#{room.button}"></a>
+                    <a class="home" th:href="@{/}" th:text="#{main.page}"></a>
                 </nav>
             </div>
         </div>
@@ -61,32 +61,29 @@
         </div>
         <div class="five columns">
             <div class="data profile1">
-                <p>Your role : <span th:text="${user.role.role}"/></p>
+                <p th:text="#{user.role}"></p>
+                <span th:text="${user.role.role}"/>
             </div>
             <div class="data profile1">
-                <p> Name : <span th:text="${user.name}"/></p>
-                <p class="more"><a href="#">Change</a></p>
+                <p th:text="#{login.form.name}"></p>
+                <span th:text="${user.name}"/>
             </div>
             <div class="data profile1">
-                <p>Surname : <span th:text="${user.surname}"/></p>
-                <p class="more"><a href="#">Change</a></p>
+                <p th:text="#{login.form.surname}"></p>
+                <span th:text="${user.surname}"/>
             </div>
             <div class="data profile1">
-                <p>Email : <span th:text="${user.email}"/></p>
-                <p class="more"><a href="#">Change</a></p>
-            </div>
-            <div class="data profile1">
-                <p>Here you can change your password</p>
-                <p class="more"><a href="#">Change</a></p>
+                <p th:text="#{login.form.email}"></p>
+                <span th:text="${user.email}"/>
             </div>
 
         </div>
         <div class="five columns">
             <nav class="pagebutton">
-                <p><a th:href="@{/admin/rooms}">Rooms</a></p>
-                <p><a th:href="@{/admin/reserves}">Reserves</a></p>
-                <p><a th:href="@{/admin/orders}">Orders</a></p>
-                <p><a th:href="@{/admin/users}">Users</a></p>
+                <p><a th:href="@{/admin/rooms}" th:text="#{room.button}"></a></p>
+                <p><a th:href="@{/admin/reserves}" th:text="#{reserve.button}"></a></p>
+                <p><a th:href="@{/admin/orders}" th:text="#{order.button}"></a></p>
+                <p><a th:href="@{/admin/users}" th:text="#{user.button}"></a></p>
             </nav>
         </div>
     </div>
