@@ -2,11 +2,8 @@ server:
   port: 8081
 
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/project
-    username: root
-    password: kara
-    driver-class-name: com.mysql.jdbc.Driver
+  messages:
+    basename: i18n/messages
 
 
 
