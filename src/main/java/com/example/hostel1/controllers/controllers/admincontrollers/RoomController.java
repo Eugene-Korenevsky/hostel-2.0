@@ -19,10 +19,6 @@ import java.util.*;
 @RequestMapping("admin/rooms")
 @Controller("adminRoomController")
 public class RoomController {
-    // @Autowired
-    //private RoomRepository roomRepository;
-    //@Autowired
-    //private DescriptionRepository descriptionRepository;
     @Autowired
     private RoomService roomService;
     @Autowired
@@ -32,12 +28,6 @@ public class RoomController {
     public String showAdminRoomsList(Map<String, Object> model) {
         List<Description> descriptions = descriptionService.findAll();
         List<Room> rooms = roomService.findAll();
-        //Iterable<Room> rooms = roomRepository.findAll();
-        //Iterable<Description> descriptions = descriptionRepository.findAll();
-        // List<String> descNames = new ArrayList<>();
-        //for (Description description : descriptions) {
-        //  descNames.add(description.getDescription());
-        //}
         RoomForm room = new RoomForm();
         model.put("descriptionsList", descriptions);
         model.put("room", room);
