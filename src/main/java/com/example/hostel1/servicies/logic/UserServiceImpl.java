@@ -38,21 +38,16 @@ public class UserServiceImpl extends GenericServiceImpl<User> implements UserSer
     @Transactional(rollbackOn = Exception.class)
     @Override
     public void registration(User user) throws EmailIsExistException, ValidationException {
-        if (user != null) {
+        Role role = roleRepository.findByRole(appProperties.getDefaultRole());
+        if (user != null && role != null) {
+            user.setRole(role);
             Validator validator = MyValidator.getValidator();
             Set<ConstraintViolation<User>> violations = validator.validate(user);
             if (violations.size() < 1) {
                 if (isUserExist(user)) {
                     throw new EmailIsExistException();
                 } else {
-                    Role role = roleRepository.findByRole(appProperties.getDefaultRole());
-                    User user1 = new User();
-                    user1.setRole(role);
-                    user1.setEmail(user.getEmail());
-                    user1.setName(user.getName());
-                    user1.setPassword(user.getPassword());
-                    user1.setSurname(user.getSurname());
-                    userRepository.save(user1);
+                    userRepository.save(user);
                 }
             } else {
                 ValidationError validationError = new ValidationError();
