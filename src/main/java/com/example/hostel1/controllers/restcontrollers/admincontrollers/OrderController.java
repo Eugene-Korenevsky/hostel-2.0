@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/admin/orders",
         produces = "application/json")
 public class OrderController {
-    // @Autowired
-    // private OrderRepository orderRepository;
     @Autowired
     private OrderService orderService;
 
@@ -27,9 +25,7 @@ public class OrderController {
     public ResponseEntity<?> getOrder(@PathVariable("id") Long id) {
         try {
             Order order = orderService.findById(id);
-            //orderRepository.findById(id).orElse(new Order());
-            System.out.println(order.getRoom().getNumber());
-            return new ResponseEntity<>(order, HttpStatus.OK);//orderRepository.findById(id).orElse(new Order());
+            return new ResponseEntity<>(order, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (ValidationException e) {

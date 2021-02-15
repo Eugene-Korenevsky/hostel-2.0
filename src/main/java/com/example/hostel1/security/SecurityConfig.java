@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/**").access("permitAll")
                 .and()
                 .formLogin().loginPage("/login").loginProcessingUrl("/authorize")
-                .defaultSuccessUrl("/profile").failureUrl("/login?error=true")
+                .defaultSuccessUrl("/profile").failureUrl("/loginFail")
                 .and()
                 .logout().logoutSuccessUrl("/")
                 .and().csrf().disable().authorizeRequests().antMatchers(PUT, "/**").permitAll()

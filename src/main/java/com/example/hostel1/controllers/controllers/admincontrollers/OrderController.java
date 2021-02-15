@@ -17,8 +17,6 @@ import java.util.Map;
 @Controller("adminOrderController")
 @RequestMapping("admin/orders")
 public class OrderController {
-  //  @Autowired
-    //private OrderRepository orderRepository;
     @Autowired
     private OrderService orderService;
 
@@ -39,13 +37,10 @@ public class OrderController {
             return "adminOrders";
         }
 
-        //orderRepository.deleteById(orderId);
-
     }
 
     @GetMapping()
     public String showAdminOrdersList(Map<String, Object> model) {
-        // Iterable<Order> orders = orderRepository.findAll();
         List<Order> orders = orderService.findAll();
         model.put("orders", orders);
         return "adminOrders";

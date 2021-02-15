@@ -18,8 +18,6 @@ import java.util.Map;
 @RequestMapping("admin/reserves")
 @Controller("adminReserveController")
 public class ReserveController {
-    // @Autowired
-    // private ReserveRepository reserveRepository;
     @Autowired
     private ReserveService reserveService;
 
