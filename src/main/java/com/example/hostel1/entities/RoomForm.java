@@ -7,12 +7,13 @@ import lombok.EqualsAndHashCode;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @EqualsAndHashCode
-public class RoomForm {
+public class RoomForm implements Serializable {
 
     @JsonProperty("number")
     @NotNull
