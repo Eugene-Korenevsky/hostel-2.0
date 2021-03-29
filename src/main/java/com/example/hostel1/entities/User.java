@@ -45,7 +45,7 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "PASSWORD")
     @Size(min = 3, message = "password is too short")
-    private String password;
+    private transient String password;
 
 
     @NotNull
